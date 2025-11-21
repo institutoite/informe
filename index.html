@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar Plantilla</title>
+    <link rel="stylesheet" href="informe.css">
+</head>
+<body>
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <!-- Imagen izquierda -->
+        <img src="images/david.png" alt="Imagen decorativa izquierda" class="side-image left-image">
+
+        <!-- Imagen derecha -->
+        <img src="images/logo.png" alt="Imagen decorativa derecha" class="side-image right-image">
+
+        <h1>Rellena el formulario con tus datos</h1>
+        <!-- Formulario para ingresar datos -->
+        <div class="form-container">
+            <!-- Campo para el título -->
+            <input type="text" id="titulo" placeholder="Título del informe">
+            <input type="number" id="paginas" placeholder="Número de páginas">
+        </div>
+
+        <!-- Botón para descargar la plantilla -->
+        
+
+        <!-- Contenedor del texto -->
+        <div class="text-container">
+            <button class="btn-copy" onclick="copyPrompt()">Copiar Prompt</button>
+        </div>
+        <div class="text-container">
+            <h2>Prompt Listo para Copiar</h2>
+            <div class="text-content" id="prompt-text">
+                <p>
+                    <strong>Quiero que generes un informe escolar para exposición con un lenguaje claro, ordenado y apto para estudiantes.</strong> Sigue exactamente estas instrucciones:
+                    <strong>Tema:</strong> El informe debe tratar del tema <span id="titulo-placeholder">[Título]</span>.
+                    <strong>Estructura del informe:</strong> El informe debe contener estas secciones principales: Agradecimiento, Dedicatoria, Introducción, Objetivos, Marco Teórico, Conclusión y Bibliografía.
+                    <strong>Objetivos:</strong> Incluir objetivos generales y específicos claramente diferenciados.
+                    <strong>Extensión del informe:</strong> El informe debe tener aproximadamente <span id="paginas-placeholder">[Número de páginas]</span> páginas.
+                    <strong>Estilo y formato:</strong> Lenguaje formal, claro y apto para colegio. Explicaciones ordenadas y fáciles de entender. Párrafos coherentes. Si la extensión requiere más contenido agrega más detalle sin repetir ideas. No uses tecnicismos innecesarios.
+                </p>
+            </div>
+            <!-- Botón para copiar el prompt -->
+        </div>
+
+        <button class="btn-download" onclick="downloadTemplate()">Descargar Plantilla Word</button>
+        <!-- Mensajes flotantes -->
+        <div id="toast-copy" class="toast">PROMPT COPIADO</div>
+        <div id="toast-download" class="toast">PLANTILLA DESCARGADA CORRECTAMENTE</div>
+        <div id="toast-error" class="toast" style="background-color:#e53935;">CAMPOS REQUERIDOS</div>
+
+        <!-- Pie de página -->
+        <footer>
+            © 2025 - Todos los derechos reservados
+        </footer>
+        <div class="help-section">
+            <p class="help-text">Si necesitas ayuda en proyectos, tareas, en todas las materias contactame.</p>
+            <a class="whatsapp-link" href="https://wa.me/59171039910?text=vengo%20de%20Informes.ite.com.bo" target="_blank" rel="noopener">
+                <span class="wa-icon" aria-hidden="true">
+                    <svg viewBox="0 0 32 32" width="32" height="32" fill="currentColor">
+                        <path d="M16.05 3C9.42 3 4 8.42 4 15.05c0 2.66.87 5.13 2.34 7.16L4 29l6.02-2.29A12.01 12.01 0 0 0 16.05 27c6.63 0 12.05-5.42 12.05-12.05C28.1 8.42 22.68 3 16.05 3Zm0 21.84c-2.13 0-4.22-.64-5.98-1.86l-.43-.28-3.56 1.36 1.2-3.67-.28-.45a10.17 10.17 0 0 1-1.56-5.49c0-5.63 4.58-10.21 10.21-10.21 5.63 0 10.21 4.58 10.21 10.21 0 5.63-4.58 10.21-10.21 10.21Zm5.6-7.62c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.47.13-.62.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.5-.5-.67-.5-.17 0-.37-.02-.57-.02-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.06 2.87 1.21 3.07.15.2 2.08 3.18 5.04 4.35.7.3 1.25.48 1.68.62.7.22 1.33.19 1.83.12.56-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
+                    </svg>
+                </span>
+                <span class="wa-text">Escríbeme por WhatsApp</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function copyPrompt() {
+            // Obtener los valores de los cuadros de texto
+            const tituloValor = document.getElementById('titulo').value.trim();
+            const paginasValor = document.getElementById('paginas').value.trim();
+
+            // Validación: ambos campos requeridos
+            if (!tituloValor || !paginasValor) {
+                const toastError = document.getElementById('toast-error');
+                toastError.classList.add('show');
+                setTimeout(() => { toastError.classList.remove('show'); }, 1800);
+
+                // Marcar inputs vacíos temporalmente
+                const tituloInput = document.getElementById('titulo');
+                const paginasInput = document.getElementById('paginas');
+                if (!tituloValor) tituloInput.classList.add('input-error');
+                if (!paginasValor) paginasInput.classList.add('input-error');
+                setTimeout(() => {
+                    tituloInput.classList.remove('input-error');
+                    paginasInput.classList.remove('input-error');
+                }, 1500);
+                return; // Detener ejecución si falta algún campo
+            }
+
+            // Plantilla base con placeholders
+            const baseTemplate = `Quiero que generes un informe escolar para exposición con un lenguaje claro, ordenado y apto para estudiantes. Sigue exactamente estas instrucciones:\nTema: el informe debe tratar del tema [Título].\nEstructura del informe: El informe debe contener estas secciones principales: Agradecimiento, Dedicatoria, Introducción, Objetivos, Marco Teórico, Conclusión y Bibliografía.\nObjetivos: Incluir objetivos generales y específicos claramente diferenciados.\nExtensión del informe: El informe debe tener aproximadamente [Número de páginas] páginas.\nEstilo y formato: Lenguaje formal, claro y apto para colegio. Explicaciones ordenadas y fáciles de entender. Párrafos coherentes. Si la extensión requiere más contenido agrega más detalle sin repetir ideas. No uses tecnicismos innecesarios.`;
+
+            // Reemplazos robustos (aceptan tilde y sin tilde)
+            let promptText = baseTemplate
+                .replace(/\[T[ií]tulo\]/g, tituloValor || '[Título]')
+                .replace(/\[Número de páginas\]/g, paginasValor || '[Número de páginas]');
+
+            // Evitar dobles espacios accidentales
+            promptText = promptText.replace(/ +/g, ' ').replace(/\n+/g, '\n').trim();
+
+            // Copiar el texto al portapapeles
+            navigator.clipboard.writeText(promptText).then(() => {
+                // Mostrar el mensaje flotante
+                const toast = document.getElementById('toast-copy');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000); // El mensaje desaparece después de 2 segundos
+
+                // Activar animación en el botón
+                const button = document.querySelector('.btn-copy');
+                button.classList.add('clicked');
+                setTimeout(() => {
+                    button.classList.remove('clicked');
+                }, 500); // La animación dura 500ms
+            });
+        }
+
+        // Actualizar los placeholders visibles en el texto mientras se escribe
+        document.getElementById('titulo').addEventListener('input', (e) => {
+            document.getElementById('titulo-placeholder').textContent = e.target.value || '[Título]';
+        });
+        document.getElementById('paginas').addEventListener('input', (e) => {
+            document.getElementById('paginas-placeholder').textContent = e.target.value || '[Número de páginas]';
+        });
+
+        function downloadTemplate() {
+            // Crear enlace temporal para descargar la plantilla Word macro (docm)
+            const link = document.createElement('a');
+            link.href = 'Plantilla_ite.docm';
+            link.download = 'Plantilla_ite.docm';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Mostrar el mensaje flotante
+            const toast = document.getElementById('toast-download');
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 2000);
+
+            // Activar animación en el botón
+            const button = document.querySelector('.btn-download');
+            button.classList.add('clicked');
+            setTimeout(() => { button.classList.remove('clicked'); }, 500);
+        }
+    </script>
+</body>
+</html>
